@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Container, getCardActionsUtilityClass, ImageList, ImageListItem } from '@mui/material';
+import { Box, Button, Container, Grid, ImageList, ImageListItem, Stack } from '@mui/material';
 const axios = require('axios').default;
 
 const CatGiphy = () => {
-
-    const [caturl, setCaturl] = useState('');
     const [caturls, setCaturls] = useState([]);
     const gotCat = useRef(false);
     const getCats = async () => {
@@ -15,7 +13,7 @@ const CatGiphy = () => {
 
         const response = await axios.get(
             url,
-            { params: { limit: 9, size: "full" } }
+            { params: { limit: 16, size: "full" } }
         );
 
         console.log(response);
@@ -37,29 +35,39 @@ const CatGiphy = () => {
     }, []);
 
     return (
-        <Container maxWidth='md'>
-            <Button variant='contained'
-                onClick={() => {
-                    getCats()
-                }}
-            >
-                Nat wants more cats!
-            </Button>
-            <ImageList sx={{ width: 600, height: 700 }} cols={3} rowHeight={164}>
-                {caturls && caturls.map((item: { id: any; url: any; }) => (
-                    <ImageListItem key={item.id}>
-                        <img
-                            src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
-                            srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                            alt={item.id}
-                            loading="lazy"
-                        />
-                    </ImageListItem>
-                ))}
-            </ImageList>
-        </Container>
+        <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center"
+            style={{ minHeight: '100vh' }}
+        >
+            <Grid item xs={3}>
+                <Button variant='contained'
+                    onClick={() => {
+                        getCats()
+                    }}>
+                    Get more cats
+                </Button>
+            </Grid>
+            <Grid >
+                <ImageList sx={{ width: 800, height: 700 }} cols={2} gap={5}>
+                    {caturls && caturls.map((item: { id: any; url: any; }) => (
+                        <ImageListItem key={item.id} >
+                            <img
+                                src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
+                                srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                alt={item.id}
+                                loading="lazy"
+                            />
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+            </Grid>
+        </Grid>
     )
 }
-
 
 export default CatGiphy
