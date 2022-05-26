@@ -53,7 +53,7 @@ const CatGiphy = () => {
                 </Button>
             </Grid>
             <Grid >
-                <ImageList sx={{ width: 800, height: 700 }} cols={2} gap={5}>
+                <ImageList sx={{ maxWidth: 800, height: 700 }} cols={2} gap={5}>
                     {caturls && caturls.map((item: { id: any; url: any; }) => (
                         <ImageListItem key={item.id} >
                             <img
@@ -70,4 +70,4 @@ const CatGiphy = () => {
     )
 }
 
-export default CatGiphy
+export default CatGiphy;
